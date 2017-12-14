@@ -1,0 +1,3 @@
+SECRET_KEY='notreallyasecretkey'
+CLIENT_SECRETS_FILE="secret-file"
+SQLALCHEMY_DATABASE_URI='sqlite:////tmp/test2.db'

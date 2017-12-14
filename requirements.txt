@@ -43,6 +43,7 @@ pyasn1==0.4.2
 pyasn1-modules==0.2.1
 Pygments==2.2.0
 python-dateutil==2.6.1
+python-dotenv==0.7.1
 python-editor==1.0.3
 pytz==2017.3
 rauth==0.7.3

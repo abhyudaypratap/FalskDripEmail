@@ -18,17 +18,20 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_ckeditor import CKEditor
 
-from models import User, Campaign, Email, db
-from forms import DripEmailBasicDetailsForm, DripEmailTemplateForm
+from .models import User, Campaign, Email, db
+from .forms import DripEmailBasicDetailsForm, DripEmailTemplateForm
 
-from utils.emailUtils import CreateMessage, send_message
+from .utils.emailUtils import CreateMessage, send_message
 
 from flask import request, render_template, flash
 
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
 app = flask.Flask(__name__)
-app.secret_key = 'somethingsecret'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test2.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://lmeorjjdferkzy:a3d0f53608d39f2e334cd3b8e1aa3c4340a9ed6222f3ef490968c7378e570cac@ec2-54-225-94-143.compute-1.amazonaws.com:5432/da7shc2afvnmcq'
+app.secret_key = os.environ.get("SECRET_KEY")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQLALCHEMY_DATABASE_URI")
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://lmeorjjdferkzy:a3d0f53608d39f2e334cd3b8e1aa3c4340a9ed6222f3ef490968c7378e570cac@ec2-54-225-94-143.compute-1.amazonaws.com:5432/da7shc2afvnmcq'
 app.wsgi_app = ProxyFix(app.wsgi_app)
 with app.app_context():
     db.init_app(app)
@@ -45,7 +48,7 @@ ckeditor = CKEditor(app)
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this application, including its client_id and client_secret.
-CLIENT_SECRETS_FILE = "client_secret_1007782173250-dav79lsj14mohnmu6bhkvpiuujng8bb6.apps.googleusercontent.com.json"
+CLIENT_SECRETS_FILE = os.environ.get("CLIENT_SECRETS_FILE")
 
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's account and requires requests to use an SSL connection.
